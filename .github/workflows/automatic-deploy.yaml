@@ -34,7 +34,7 @@ jobs:
         fi
         echo "pwd=${PWD}"
         echo 'check jar over!!'
-        echo "evn comit_id=${{jobs.build.steps.git_checkout.env.commit_id}}"
+        echo "evn comit_id=${{ steps.git_checkout.env.commit_id }}"
 
 
 
