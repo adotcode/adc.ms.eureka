@@ -37,8 +37,9 @@ jobs:
         fi
         echo "pwd=${PWD}"
         echo 'check jar over!!'
-        echo "evn comit_id=${steps.git_checkout.env.commit_id}"
-        echo "aid=${aliyun_accesskey_id}"
+        echo "evn comit_id=${{ steps.git_checkout.env.commit_id }}"
+        echo "aid=${{ aliyun_accesskey_id }}"
+
 
 
 
