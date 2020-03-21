@@ -39,7 +39,8 @@ jobs:
         echo "pwd=${PWD}"
         echo 'check jar over!!'
         echo "evn comit_id=${{ steps.git_checkout.env.commit_id }}"
-        echo "aid=${{ steps.build_docker.env.aliyun_accesskey_id }}"
+        echo "aid=" ${{ steps.build_docker.env.aliyun_accesskey_id }}
+        echo ${{ TARGET_COMMITISH }}
 
 
 
