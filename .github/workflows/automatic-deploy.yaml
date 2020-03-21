@@ -25,6 +25,9 @@ jobs:
       run: ./gradlew build
 
     - name: Build Docker Image
+      env:
+        aliyun_accesskey_id: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_ID }}
+        aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_SECRET }}
       run: |
         echo "All Process OK!!"
         echo 'check jar'
@@ -34,7 +37,8 @@ jobs:
         fi
         echo "pwd=${PWD}"
         echo 'check jar over!!'
-        echo "evn comit_id=${{ steps.git_checkout.env.commit_id }}"
+        echo "evn comit_id=${steps.git_checkout.env.commit_id}"
+        echo "aid=${aliyun_accesskey_id}"
 
 
 
