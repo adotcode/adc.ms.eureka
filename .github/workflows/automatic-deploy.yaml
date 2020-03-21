@@ -25,9 +25,10 @@ jobs:
       run: |
         echo "All Process OK!!"
         echo 'check jar'
-        if [ -f "./build/eureka-0.0.1-SNAPSHOT.jar" ]; then
+        if [ -f "./build/libs/eureka-0.0.1-SNAPSHOT.jar" ]; then
             echo 'eureka-0.0.1-SNAPSHOT.jar exists'
         fi
+        echo 'pwd=${PWD}'
         echo 'check jar over!!'
 
 
