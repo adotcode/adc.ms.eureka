@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Git Checkout Code
       uses: actions/checkout@v1
+      id: git_checkout
+      env:
+        commit_id: 113wqeqweq
 
     - name: Set up JDK 12.0
       uses: actions/setup-java@v1
@@ -31,6 +34,7 @@ jobs:
         fi
         echo "pwd=${PWD}"
         echo 'check jar over!!'
+        echo "evn comit_id=${{jobs.build.steps.git_checkout.env.commit_id}}"
 
 
 
