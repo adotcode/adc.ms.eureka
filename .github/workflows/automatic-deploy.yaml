@@ -10,37 +10,33 @@ jobs:
     name: Build Java
     runs-on: ubuntu-latest
     steps:
-    - name: Git Checkout Code
-      uses: actions/checkout@v1
-      id: git_checkout
-      env:
-        commit_id: 113wqeqweq
+      - name: Git Checkout Code
+        uses: actions/checkout@v1
+        id: git_checkout
+        env:
+          commit_id: 113wqeqweq
 
-    - name: Set up JDK 12.0
-      uses: actions/setup-java@v1
-      with:
-        java-version: 12.0
+      - name: Set up JDK 12.0
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12.0
 
-    - name: Build with Gradle
-      run: ./gradlew build
+      - name: Build with Gradle
+        run: ./gradlew build
 
-    - name: Build Docker Image
-      id: build_docker
-      env:
-        aliyun_accesskey_id: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_ID }}
-        aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_SECRET }}
-      run: |
-        echo "All Process OK!!"
-        echo 'check jar'
-        if [ -f "./build/libs/eureka-0.0.1-SNAPSHOT.jar" ]; then
-            echo 'eureka-0.0.1-SNAPSHOT.jar exists'
-            java -jar build/libs/eureka-0.0.1-SNAPSHOT.jar
-        fi
-        echo "pwd=${PWD}"
-        echo 'check jar over!!'
-        echo "evn comit_id=${{ steps.git_checkout.env.commit_id }}"
-        echo "aid=" ${{ steps.build_docker.env.aliyun_accesskey_id }}
-        echo ${{ TARGET_COMMITISH }}
+      - name: Build Docker Image
+        id: build_docker
+        env:
+          aliyun_accesskey_id: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_ID }}
+          aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_SECRET }}
+        run: |
+          echo "build images start..."
+          sudo docker login --username=${aliyun_accesskey_id} registry.us-east-1.aliyuncs.com --password=${aliyun_accesskey_secret}
+          sudo docker build -t adc.ms.eureka:v1.0 .
+          sudo docker tag adc.ms.eureka:v1.0 registry.us-east-1.aliyuncs.com/adotcode/adc.ms:v1.0
+          sudo docker push registry.us-east-1.aliyuncs.com/adotcode/adc.ms:v1.0
+          echo "build images end..."
+
 
 
 
