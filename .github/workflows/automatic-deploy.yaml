@@ -27,8 +27,8 @@ jobs:
       - name: Build Docker Image
         id: build_docker
         env:
-          aliyun_accesskey_id: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_ID }}
-          aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_ACCESSKEY_SECRET }}
+          aliyun_accesskey_id: ${{ secrets.ALIYUN_IMAGES_HUB_USER_NAME }}
+          aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
         run: |
           echo "build images start..."
           sudo docker login --username=${aliyun_accesskey_id} registry.us-east-1.aliyuncs.com --password=${aliyun_accesskey_secret}
