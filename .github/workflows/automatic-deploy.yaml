@@ -24,18 +24,18 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Build Docker Image
-        id: build_docker
-        env:
-          aliyun_accesskey_id: ${{ secrets.ALIYUN_IMAGES_HUB_USER_NAME }}
-          aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
-        run: |
-          echo "build images start..."
-          echo ${aliyun_accesskey_secret} | sudo docker login --username=${aliyun_accesskey_id} registry.us-east-1.aliyuncs.com --password-stdin
-          sudo docker build -t adc.ms.eureka.usa:v1.1 .
-          sudo docker tag adc.ms.eureka.usa:v1.1 registry.us-east-1.aliyuncs.com/adotcode/adc.ms.eureka.usa:v1.1
-          sudo docker push registry.us-east-1.aliyuncs.com/adotcode/adc.ms.eureka.usa:v1.1
-          echo "build images end..."
+      - name: Aliyun Docker Images Build And Push
+        uses: risfeng/aliyun-docker-image-build-push-action@v0.1
+        with:
+          registry_url: registry.us-east-1.aliyuncs.com
+          namespaces: adotcode
+          repository_name: adc.ms.eureka.usa
+          user_name: ${{ secrets.ALIYUN_IMAGES_HUB_USER_NAME }}
+          password: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
+          image_name: adc.ms.eureka
+          image_version: v1.0
+          docker_file: .
+
 
 
 
