@@ -34,6 +34,8 @@ jobs:
           password: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
           image_name: adc.ms.eureka.usa
           image_version: v1.2
+          docker_file: ${github_workspace}
+
 
 
 
