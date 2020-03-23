@@ -35,6 +35,7 @@ jobs:
           sudo docker build -t adc.ms.eureka.usa:v1.1 .
           sudo docker tag adc.ms.eureka.usa:v1.1 registry.us-east-1.aliyuncs.com/adotcode/adc.ms.eureka.usa:v1.1
           sudo docker push registry.us-east-1.aliyuncs.com/adotcode/adc.ms.eureka.usa:v1.1
+          cat /home/runner/.docker/config.json
           echo "build images end..."
 
 
