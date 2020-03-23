@@ -25,7 +25,7 @@ jobs:
         run: ./gradlew build
 
       - name: Aliyun Docker Images Build And Push
-        uses: risfeng/aliyun-docker-image-build-push-action@v0.2
+        uses: risfeng/aliyun-docker-image-build-push-action@v0.3
         with:
           registry_url: registry.us-east-1.aliyuncs.com
           namespaces: adotcode
@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
           image_name: adc.ms.eureka.usa
           image_version: v1.2
-          docker_file: /home/runner/work/adc.ms.eureka/adc.ms.eureka
+          docker_file: .
 
 
 
