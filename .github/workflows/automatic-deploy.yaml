@@ -31,7 +31,7 @@ jobs:
           aliyun_accesskey_secret: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
         run: |
           echo "build images start..."
-          echo ${ aliyun_accesskey_secret } | sudo docker login --username=${ aliyun_accesskey_id } registry.us-east-1.aliyuncs.com --password-stdin
+          echo ${aliyun_accesskey_secret} | sudo docker login --username=${aliyun_accesskey_id} registry.us-east-1.aliyuncs.com --password-stdin
           sudo docker build -t adc.ms.eureka.usa:v1.1 .
           sudo docker tag adc.ms.eureka.usa:v1.1 registry.us-east-1.aliyuncs.com/adotcode/adc.ms.eureka.usa:v1.1
           sudo docker push registry.us-east-1.aliyuncs.com/adotcode/adc.ms.eureka.usa:v1.1
