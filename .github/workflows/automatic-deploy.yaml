@@ -32,7 +32,7 @@ jobs:
           repository_name: 'adc.ms.eureka'
           user_name: ${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }}
           password: ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }}
-          image_version: ${{ GITHUB_SHA }}
+          image_version: ${{ github.sha }}
           docker_file: '.'
 
       - name: Get pre step result output image_pull_url
