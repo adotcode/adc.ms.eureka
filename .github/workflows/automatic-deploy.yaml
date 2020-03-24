@@ -27,12 +27,12 @@ jobs:
       - name: Aliyun Docker Images Build And Push
         uses: risfeng/aliyun-docker-image-build-push-action@v1.0
         with:
-          registry_url: 'registry.us-east-1.aliyuncs.com'
-          namespaces: 'adotcode'
-          repository_name: 'adc.ms.eureka.usa'
-          user_name: ${{ secrets.ALIYUN_IMAGES_HUB_USER_NAME }}
-          password: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
-          image_version: 'v1.3'
+          registry_url: 'useccr.ccs.tencentyun.com'
+          namespaces: 'adc.ms.usa'
+          repository_name: 'adc.ms.eureka'
+          user_name: ${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }}
+          password: ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }}
+          image_version: 'v1.0'
           docker_file: '.'
 
 
