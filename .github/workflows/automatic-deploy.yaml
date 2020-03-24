@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
           image_name: adc.ms.eureka.usa
           image_version: v1.2
-          docker_file: .
+          docker_file: /home/runner/work/adc.ms.eureka/adc.ms.eureka
 
 
 
