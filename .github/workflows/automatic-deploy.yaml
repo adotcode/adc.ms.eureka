@@ -27,14 +27,14 @@ jobs:
       - name: Aliyun Docker Images Build And Push
         uses: risfeng/aliyun-docker-image-build-push-action@v0.9.2
         with:
-          registry_url: registry.us-east-1.aliyuncs.com
-          namespaces: adotcode
-          repository_name: adc.ms.eureka.usa
+          registry_url: 'registry.us-east-1.aliyuncs.com'
+          namespaces: 'adotcode'
+          repository_name: 'adc.ms.eureka.usa'
           user_name: ${{ secrets.ALIYUN_IMAGES_HUB_USER_NAME }}
           password: ${{ secrets.ALIYUN_IMAGES_HUB_TOKEN }}
-          image_name: adc.ms.eureka.usa
-          image_version: v1.2
-          docker_file: /home/runner/work/adc.ms.eureka/adc.ms.eureka
+          image_name: 'adc.ms.eureka.usa'
+          image_version: 'v1.2'
+          docker_file: '.'
 
 
 
