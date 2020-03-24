@@ -25,7 +25,8 @@ jobs:
         run: ./gradlew build
 
       - name: Docker Images Build And Push To Hub
-        uses: risfeng/docker-image-build-push-action@v1.0
+        id: build_push_image
+        uses: risfeng/docker-image-build-push-action@v1.1
         with:
           registry_url: 'useccr.ccs.tencentyun.com'
           namespaces: 'adc.ms.usa'
@@ -36,7 +37,7 @@ jobs:
           docker_file: '.'
 
       - name: Get pre step result output image_pull_url
-        run: echo "The time was ${{ steps.buildAndPushImage.outputs.image_pull_url }}"
+        run: echo "The time was ${{ steps.build_push_image.outputs.image_pull_url }}"
 
 
 
