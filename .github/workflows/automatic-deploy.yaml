@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build Java
+    name: Deploy Project [adc.ms.eureka]
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout Code
@@ -24,16 +24,20 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Aliyun Docker Images Build And Push
-        uses: risfeng/aliyun-docker-image-build-push-action@v1.0
+      - name: Docker Images Build And Push To Hub
+        uses: risfeng/docker-image-build-push-action@v1.0
         with:
           registry_url: 'useccr.ccs.tencentyun.com'
           namespaces: 'adc.ms.usa'
           repository_name: 'adc.ms.eureka'
           user_name: ${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }}
           password: ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }}
-          image_version: 'v1.0'
+          image_version: ${{ GITHUB_SHA }}
           docker_file: '.'
+
+      - name: Get pre step result output image_pull_url
+          run: echo "The time was ${{ steps.buildAndPushImage.outputs.image_pull_url }}"
+
 
 
 
