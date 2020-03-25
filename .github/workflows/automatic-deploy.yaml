@@ -22,7 +22,7 @@ jobs:
           java-version: 12.0
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: gradle build
 
       - name: Docker Images Build And Push To Hub
         id: build_push_image
