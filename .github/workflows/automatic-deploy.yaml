@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout Code
-        uses: actions/checkout@v1
         id: git_checkout
+        uses: actions/checkout@v1
         env:
           commit_id: 113wqeqweq
 
@@ -39,7 +39,7 @@ jobs:
       - name: Get pre step result output image_pull_url
         if: success()
         run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}" \
-          && echo "env commit_id=${{ steps.git_checkout.env.commit_id }}"
+          && echo "env commit_id=${{ steps.env.commit_id }}"
 
 
 
