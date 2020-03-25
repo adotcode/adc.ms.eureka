@@ -37,7 +37,9 @@ jobs:
           docker_file: '.'
 
       - name: Get pre step result output image_pull_url
-        run: echo "The time was ${{ steps.build_push_image.outputs.image_pull_url }}"
+        if: success()
+        run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}" \
+          && echo "env commit_id=${{ jobs.build.steps.git_checkout.env.commit_id }}"
 
 
 
