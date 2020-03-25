@@ -26,7 +26,7 @@ jobs:
 
       - name: Docker Images Build And Push To Hub
         id: build_push_image
-        uses: risfeng/docker-image-build-push-action@v1.1
+        uses: risfeng/docker-image-build-push-action@v1.0
         with:
           registry_url: 'useccr.ccs.tencentyun.com'
           namespaces: 'adc.ms.usa'
