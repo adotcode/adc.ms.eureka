@@ -41,6 +41,10 @@ jobs:
         run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}" \
           && echo "env commit_id=${{ steps.env.commit_id }}"
 
+      - name: Get Shell Script
+        run: echo "Get Shell:" \
+          && cat .shell/start.sh
+
 
 
 
