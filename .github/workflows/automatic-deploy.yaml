@@ -45,6 +45,18 @@ jobs:
         run: echo "Get Shell:" \
           && cat .shell/start.sh
 
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.0.7
+        with:
+          host: ${{ secrets.HOSTWINDS_SERVER_CENTOS_HOST_IP }}
+          username: ${{ secrets.HOSTWINDS_SERVER_CENTOS_USERNAME }}
+          key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
+          port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
+          script: |
+            whoami
+            ls -al
+
+
 
 
 
