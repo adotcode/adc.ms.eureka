@@ -37,8 +37,8 @@ jobs:
         if: success()
         run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}"
 
-      - name: Set Env Run Shell Script
-        run: echo ::set-env name=APP_RUN_SHELL_SCRIPT::"echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin && docker pull ${{ steps.build_push_image.outputs.image_pull_url }}"
+      - name: Create Docker Run Commands
+        run: echo ::set-env name=APP_RUN_DOCKER_SCRIPT::"echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin && docker pull ${{ steps.build_push_image.outputs.image_pull_url }}"
 
       - name: Remote Server Exce Run Shell Commands
         uses: appleboy/ssh-action@v0.0.7
@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
           port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
           script: |
-            echo "Remote > ${{ env.APP_RUN_SHELL_SCRIPT }} "
+            ${{ env.APP_RUN_DOCKER_SCRIPT }}
             whoami
             ls -al
 
