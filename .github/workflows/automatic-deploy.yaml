@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
           port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
           script: |
-            echo "Remote > ${{ env.APP_RUN_SHELL_SCRIPT }}"
+            echo "Remote > ${{ env.APP_RUN_SHELL_SCRIPT }} "
             whoami
             ls -al
 
