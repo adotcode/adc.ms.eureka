@@ -6,31 +6,28 @@ on:
       - master
 
 jobs:
-  build:
-    name: Deploy Project [adc.ms.eureka]
+  build_and_push:
+    name: Build And Publish
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout Code
-        id: git_checkout
         uses: actions/checkout@v1
-        env:
-          commit_id: 113wqeqweq
 
-      - name: Set up JDK 12.0
+      - name: Set Up JDK 12.0
         uses: actions/setup-java@v1
         with:
           java-version: 12.0
 
-      - name: Build with Gradle
+      - name: Build With Gradle
         run: gradle build
 
       - name: Docker Images Build And Push To Hub
         id: build_push_image
         uses: risfeng/docker-image-build-push-action@v1.0
         with:
-          registry_url: 'useccr.ccs.tencentyun.com'
-          namespaces: 'adc.ms.usa'
-          repository_name: 'adc.ms.eureka'
+          registry_url: ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }}
+          namespaces: ${{ secrets.TENCENT_IMAGES_HUB_NAMESPACES }}
+          repository_name: ${{ secrets.TENCENT_IMAGES_HUB_REPOSITORY_NAME }}
           user_name: ${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }}
           password: ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }}
           image_version: ${{ github.sha }}
@@ -38,16 +35,12 @@ jobs:
 
       - name: Get pre step result output image_pull_url
         if: success()
-        run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}" \
-          && echo "env commit_id=${{ steps.env.commit_id }}"
+        run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}"
 
       - name: Set Env Run Shell Script
         run: echo ::set-env name=APP_RUN_SHELL_SCRIPT::$(cat .shell/start.sh)
 
-      - name: Print Shell Script
-        run: echo "Print APP_RUN_SHELL_SCRIPT > ${{ env.APP_RUN_SHELL_SCRIPT }}"
-
-      - name: SSH Remote Commands
+      - name: Remote Server Exce Run Shell Commands
         uses: appleboy/ssh-action@v0.0.7
         with:
           host: ${{ secrets.HOSTWINDS_SERVER_CENTOS_HOST_IP }}
