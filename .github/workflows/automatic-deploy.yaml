@@ -33,8 +33,12 @@ jobs:
           image_version: ${{ github.sha }}
           docker_file: '.'
 
-      - name: Create Docker Run Commands
-        run: echo ::set-env name=APP_RUN_DOCKER_SCRIPT::"echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin && docker run -p 8080:80 -d ${{ steps.build_push_image.outputs.image_pull_url }}"
+      - name: Create Docker Run Script
+        run: echo ::set-env name=APP_RUN_DOCKER_SCRIPT::"\
+        echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | \
+        docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} \
+        ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin && \
+        docker run -p 8080:80 -d ${{ steps.build_push_image.outputs.image_pull_url }}"
 
       - name: Remote Server Exce Run Shell Commands
         uses: appleboy/ssh-action@v0.0.7
