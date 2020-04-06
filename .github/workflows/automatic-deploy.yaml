@@ -41,23 +41,21 @@ jobs:
         run: echo "image_pull_url=${{ steps.build_push_image.outputs.image_pull_url }}" \
           && echo "env commit_id=${{ steps.env.commit_id }}"
 
-      - name: Get Shell Script
-        id: Get_Start_Script
-        env:
-          START_SCRIPT: $(cat .shell/start.sh)
-        run: echo "START_SCRIPT > ${{ env.START_SCRIPT }}"
+      - name: Set Env Run Shell Script
+        run: echo ::set-env name=APP_RUN_SHELL_SCRIPT::$(cat .shell/start.sh)
+
+      - name: Print Shell Script
+        run: echo "Print APP_RUN_SHELL_SCRIPT > ${{ env.APP_RUN_SHELL_SCRIPT }}"
 
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.0.7
-        env:
-          START_SCRIPT: $(cat .shell/start.sh)
         with:
           host: ${{ secrets.HOSTWINDS_SERVER_CENTOS_HOST_IP }}
           username: ${{ secrets.HOSTWINDS_SERVER_CENTOS_USERNAME }}
           key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
           port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
           script: |
-            echo "Remote > ${{ env.START_SCRIPT }}"
+            echo "Remote > ${{ env.APP_RUN_SHELL_SCRIPT }}"
             whoami
             ls -al
 
