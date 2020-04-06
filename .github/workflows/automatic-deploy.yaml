@@ -42,6 +42,7 @@ jobs:
           && echo "env commit_id=${{ steps.env.commit_id }}"
 
       - name: Get Shell Script
+        id: Get_Start_Script
         env:
           START_SCRIPT: $(cat .shell/start.sh)
         run: echo "START_SCRIPT > ${{ env.START_SCRIPT }}"
@@ -54,7 +55,7 @@ jobs:
           key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
           port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
           script: |
-            echo "Remote > ${{ env.START_SCRIPT }}"
+            echo "Remote > ${{ steps.Get_Start_Script.env.START_SCRIPT }}"
             whoami
             ls -al
 
