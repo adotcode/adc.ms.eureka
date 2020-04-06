@@ -44,7 +44,7 @@ jobs:
       - name: Get Shell Script
         env:
           START_SCRIPT: $(cat .shell/start.sh)
-        run: echo "START_SCRIPT > ${START_SCRIPT}"
+        run: echo "START_SCRIPT > ${{ env.START_SCRIPT }}"
 
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.0.7
@@ -54,7 +54,7 @@ jobs:
           key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
           port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
           script: |
-            echo "Remote > ${START_SCRIPT}"
+            echo "Remote > ${{ env.START_SCRIPT }}"
             whoami
             ls -al
 
