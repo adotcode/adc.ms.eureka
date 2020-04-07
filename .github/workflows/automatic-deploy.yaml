@@ -39,21 +39,9 @@ jobs:
           DOCKER_IMAGES_REGISTRY_NAME: ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }}/${{ secrets.TENCENT_IMAGES_HUB_NAMESPACES }}/${{ secrets.TENCENT_IMAGES_HUB_REPOSITORY_NAME }}
         run: |
           echo ::set-env name=DOCKER_LOGIN_SCRIPT::"echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin"
-          echo ::set-env name=DOCKER_CONTAINER_STOP_SCRIPT::"docker ps | grep ${{ env.DOCKER_RUN_CONTAINER_NAME }} &> /dev/null \
-          if [ $? -e 0 ] \
-          then \
-            docker stop ${{ env.DOCKER_RUN_CONTAINER_NAME }}" \
-          fi \
-          echo ::set-env name=DOCKER_CONTAINER_REMOVE_SCRIPT::"docker ps | grep ${{ env.DOCKER_RUN_CONTAINER_NAME }} &> /dev/null \
-          if [ $? -e 0 ] \
-          then \
-            docker rm ${{ env.DOCKER_RUN_CONTAINER_NAME }}" \
-          fi \
-          echo ::set-env name=DOCKER_IMAGES_REMOVE_SCRIPT::"docker images | grep ${{ env.DOCKER_IMAGES_REGISTRY_NAME }} &> /dev/null \
-          if [ $? -e 0 ] \
-          then \
-           docker rmi $(docker images | grep ${{ env.DOCKER_IMAGES_REGISTRY_NAME }} | awk '{print $3}')" \
-          fi \
+          echo ::set-env name=DOCKER_CONTAINER_STOP_SCRIPT::"docker ps | grep ${{ env.DOCKER_RUN_CONTAINER_NAME }} &> /dev/null & [[ $? -e 0 ]] && docker stop ${{ env.DOCKER_RUN_CONTAINER_NAME }}"
+          echo ::set-env name=DOCKER_CONTAINER_REMOVE_SCRIPT::"docker ps | grep ${{ env.DOCKER_RUN_CONTAINER_NAME }} &> /dev/null & [[ $? -e 0 ]] && docker rm ${{ env.DOCKER_RUN_CONTAINER_NAME }}"
+          echo ::set-env name=DOCKER_IMAGES_REMOVE_SCRIPT::"docker images | grep ${{ env.DOCKER_IMAGES_REGISTRY_NAME }} &> /dev/null & [[ $? -e 0 ]] && docker rmi $(docker images | grep ${{ env.DOCKER_IMAGES_REGISTRY_NAME }} | awk '{print $3}')"
           echo ::set-env name=DOCKER_CONTAINER_RUN_SCRIPT::"docker run -d --name ${{ env.DOCKER_RUN_CONTAINER_NAME }} ${{ steps.build_push_image.outputs.image_pull_url }}"
 
       - name: Remote Server Exce Run Shell Commands
