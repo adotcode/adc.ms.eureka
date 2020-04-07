@@ -37,9 +37,9 @@ jobs:
         env:
           DOCKER_RUN_NAME: adc.ms.eureka
         run: |
-        echo ::set-env name=DOCKER_LOGIN_SCRIPT::"echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin"
-        echo ::set-env name=DOCKER_CLEAR_SCRIPT::"docker run -d ${{ steps.build_push_image.outputs.image_pull_url }}"
-        echo ::set-env name=DOCKER_RUN_SCRIPT::"docker run -d --name ${{ env.DOCKER_RUN_NAME }} ${{ steps.build_push_image.outputs.image_pull_url }}"
+          echo ::set-env name=DOCKER_LOGIN_SCRIPT::"echo ${{ secrets.TENCENT_IMAGES_HUB_TOKEN }} | docker login --username=${{ secrets.TENCENT_IMAGES_HUB_USER_NAME }} ${{ secrets.TENCENT_IMAGES_HUB_REGISTRY_URL }} --password-stdin"
+          echo ::set-env name=DOCKER_CLEAR_SCRIPT::"docker run -d ${{ steps.build_push_image.outputs.image_pull_url }}"
+          echo ::set-env name=DOCKER_RUN_SCRIPT::"docker run -d --name ${{ env.DOCKER_RUN_NAME }} ${{ steps.build_push_image.outputs.image_pull_url }}"
 
 
 
@@ -51,8 +51,8 @@ jobs:
           key: ${{ secrets.REMOTE_SERVER_ID_RSA_PRIVATE_KEY }}
           port: ${{ secrets.HOSTWINDS_SERVER_CENTOS_PORT }}
           script: |
-          ${{ env.DOCKER_LOGIN_SCRIPT }}
-          ${{ env.DOCKER_RUN_SCRIPT }}
+            ${{ env.DOCKER_LOGIN_SCRIPT }}
+            ${{ env.DOCKER_RUN_SCRIPT }}
 
 
 
